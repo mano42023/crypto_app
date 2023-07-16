@@ -2,7 +2,7 @@
     "openapi": "3.0.3",
     "info": {
         "title": "Crypto Market API",
-        "description": "Crypto Market API is to dispaly market summaries with authendication",
+        "description": "Crypto Market API is to dispaly market summaries with authendication. \n\n\nUse 'api/get_token' API for get the 'token' and add token to the value filed in Authorize",
         "version": "1.0"
     },
     "basePath": "/api",
@@ -226,6 +226,7 @@
         },
         "securitySchemes": {
             "Authorization": {
+                "description": "Use'api/get_token' API for get the 'token' and add token to the value filed",
                 "type": "apiKey",
                 "name": "Authorization",
                 "in": "header"

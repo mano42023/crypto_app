@@ -1,0 +1,235 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Crypto Market API",
+        "description": "Crypto Market API is to dispaly market summaries with authendication",
+        "version": "1.0"
+    },
+    "basePath": "/api",
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "tags": [
+        {
+            "name": "Authendication",
+            "description": "User authendication"
+        },
+        {
+            "name": "Market",
+            "description": "For list summary and summaries from the crypto Market "
+        }
+    ],
+    "paths": {
+        "/api/get_token": {
+            "post": {
+                "tags": [
+                    "Authendication"
+                ],
+                "summary": "Return Auth token",
+                "description": "For api authendication, Return Auth token",
+                "operationId": "auth",
+                "requestBody": {
+                    "description": "Get a auth token if user is avialable",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid input, username or password is wrong"
+                    },
+                    "400": {
+                        "description": "Bad request, username or password keys are missing"
+                    }
+                }
+            }
+        },
+        "/api/get_all_summaries": {
+            "get": {
+                "tags": [
+                    "Market"
+                ],
+                "summary": "Get All summaries",
+                "description": "Get All summaries",
+                "operationId": "summaries",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/summaries"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        },
+        "/api/get_summary": {
+            "get": {
+                "tags": [
+                    "Market"
+                ],
+                "summary": "Get summary for particular symbol",
+                "description": "Get summary for particular symbol",
+                "operationId": "summary",
+                "parameters": [
+                    {
+                        "name": "market",
+                        "in": "query",
+                        "description": "Enter the market symbol",
+                        "required": true,
+                        "explode": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "1PECO-BTC"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/summary"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                },
+                "security": [
+                    {
+                        "Authorization": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "example": "user1"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "user1"
+                    }
+                }
+            },
+            "summary": {
+                "type": "object",
+                "properties": {
+                    "symbol": {
+                        "type": "string",
+                        "example": "1PECO-BTC"
+                    },
+                    "high": {
+                        "type": "string",
+                        "example": "0.000005290000"
+                    },
+                    "low": {
+                        "type": "string",
+                        "example": "0.000005290000"
+                    },
+                    "volume": {
+                        "type": "string",
+                        "example": "0.00000000"
+                    },
+                    "quoteVolume": {
+                        "type": "string",
+                        "example": "0.00000000"
+                    },
+                    "percentChange": {
+                        "type": "string",
+                        "example": "0"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "example": "2023-07-16T12:05:15.47Z"
+                    }
+                }
+            },
+            "summaries": {
+                "type": "object",
+                "properties": {
+                    "symbol": {
+                        "type": "string",
+                        "example": "1PECO-BTC"
+                    },
+                    "high": {
+                        "type": "string",
+                        "example": "0.000005290000"
+                    },
+                    "low": {
+                        "type": "string",
+                        "example": "0.000005290000"
+                    },
+                    "volume": {
+                        "type": "string",
+                        "example": "0.00000000"
+                    },
+                    "quoteVolume": {
+                        "type": "string",
+                        "example": "0.00000000"
+                    },
+                    "percentChange": {
+                        "type": "string",
+                        "example": "0"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "example": "2023-07-16T12:05:15.47Z"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "Authorization": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}
